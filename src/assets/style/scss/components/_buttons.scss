@@ -1,0 +1,40 @@
+.btn {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: normal;
+  transition: all .3s ease-in-out
+}
+
+.btn-m {
+  padding: 8px 16px;
+  border-radius: 16px;
+}
+
+.btn-sm-rounded {
+  border-radius: 5px;
+}
+
+.btn-outline-primary {
+  border: 1px solid $primary;
+  &:hover {
+    background: $primary;
+    color: $light;
+  }
+}
+
+.btn-bg {
+  background: $bg;
+  &:hover {
+    background: $secondary;
+    color: $light;
+  }
+}
+
+.btn-secondary {
+  background: $secondary;
+  color: $light;
+  &:hover {
+    background: $primary;
+    color: $light;
+  }
+}

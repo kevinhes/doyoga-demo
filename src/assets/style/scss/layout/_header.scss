@@ -1,0 +1,21 @@
+.site-header {
+  padding: 20px 0;
+  background: $bg;
+}
+
+.site-logo {
+  a {
+    width: 96px;
+    height: 31px;
+    background-image: url('/images/DOYOGA-logo.png');
+    background-size: cover;
+    overflow: hidden;
+    text-indent: 101%;
+  }
+}
+
+.nav-link {
+  color: $gray;
+  padding-left: 16px;
+  padding-right: 16px;
+}

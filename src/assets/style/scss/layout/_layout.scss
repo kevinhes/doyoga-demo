@@ -1,0 +1,21 @@
+$layout-spacer: (
+  s: (space: 32px),
+  m: (space: 40px),
+  l: (space: 64px),
+);
+
+@each $breakpoint, $values in $layout-spacer {
+  .layout-pt-#{$breakpoint} {
+    padding-top: map-get($values, space);
+  }
+  .layout-pb-#{$breakpoint} {
+    padding-bottom: map-get($values, space);
+  }
+  .layout-py-#{$breakpoint} {
+    padding-top: map-get($values, space);
+    padding-bottom: map-get($values, space);
+  }
+  .layout-mb-#{$breakpoint} {
+    margin-bottom: map-get($values, space);
+  }
+}

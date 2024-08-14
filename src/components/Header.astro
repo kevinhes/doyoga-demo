@@ -1,0 +1,35 @@
+---
+const { isHome = false, title } = Astro.props
+---
+<header class="site-header">
+  <section class="container">
+    <section class="d-flex justify-content-between align-items-center">
+      <!-- logo -->
+      {
+        isHome ? 
+          <h1 class="site-logo">
+            <a href="/">
+            { title }
+            </a>
+          </h1>
+          :
+          <p class="site-logo">
+            <a href="/">
+            { title }
+            </a>
+          </p>
+      }
+      <!-- nav -->
+      <ul class="list-unstyled d-flex">
+        <a href="/course-info/" class="nav-link">課程介紹</a>
+        <a href="/env/" class="nav-link">環境介紹</a>
+        <a href="/calendar/" class="nav-link">當月課表</a>
+      </ul>
+      <!-- function -->
+      <ul class="list-unstyedl d-flex">
+          <a href="/reservation/" class="btn btn-m btn-outline-primary me-4">立即預約</a>
+          <a href="/contact/" class="btn btn-m btn-outline-primary" >聯絡我們</a>
+      </ul>
+    </section>
+  </section>
+</header>
