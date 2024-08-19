@@ -1,4 +1,6 @@
 @import './vendor/bootstrap';
+@import '/node_modules/swiper/swiper-vars.scss';
+@import '/node_modules/swiper/swiper.scss';
 
 // base
 @import './base/base';
@@ -9,6 +11,7 @@
 @import './components/banner';
 @import './components/list';
 @import './components/card';
+@import './components/swiper';
 
 // layout
 @import './layout/header';

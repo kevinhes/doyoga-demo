@@ -38,3 +38,25 @@
     color: $light;
   }
 }
+
+.arrow-link {
+  display: flex;
+  span {
+    color: $primary;
+    margin-right: 8px;
+    transition: all .3s ease-in-out;
+  }
+  svg {
+    fill: $primary;
+    transition: all .3s ease-in-out;
+  }
+  &:hover {
+    span {
+      color: $info;
+      margin-right: 16px;
+    }
+    svg {
+      fill: $secondary;
+    }
+  }
+}

@@ -9,12 +9,45 @@
   padding: 24px 32px;
 }
 
+.card-p-0 {
+  padding: 0;
+}
+
+.card-smm {
+  height: 196px;
+}
+
+.card-sm {
+  height: 207px;
+}
+
+.card-smp {
+  height: 341px;
+}
+
 .card-m {
   height: 420px;
 }
 
 .card-l {
+  height: 444px;
+}
+
+.card-xl {
   height: 628px;
+}
+
+.card-img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.card-img-m {
+  height: 243px;
+}
+
+.card-body {
+  padding: 24px;
 }
 
 .card-body-col-end {
@@ -39,6 +72,11 @@
   object-fit: cover;
   top: 0;
   left: 0;
+  border-radius: 16px4;
+}
+
+.card-bg-top {
+  object-position: top;
 }
 
 .card-text-light {
@@ -73,4 +111,12 @@
       max-height: 64px;
     }
   }
+}
+
+.card-pill {
+  position: absolute;
+  top: -15px;
+  left: 10px;
+  background: $secondary;
+  color: $light;
 }

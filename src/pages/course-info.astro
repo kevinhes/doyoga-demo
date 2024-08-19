@@ -1,0 +1,115 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+
+const allCourses = await getCollection('course');
+const courseList = await Astro.glob('../content/course/*.md')
+const featuredCourse = courseList.filter( ( course ) => (course.frontmatter['monthly-Featured'] === 'true') )[0]
+let filerCousreList = courseList.filter( ( course ) => (course.frontmatter['monthly-Featured'] !== 'true') )
+filerCousreList = filerCousreList.sort( ( a,b ) => a.frontmatter.order- b.frontmatter.order )
+---
+<Layout title={ 'Course Info' } >
+	<main>
+    <section class="layout-py-l container">
+      <h3 class="text-primary text-center layout-mb-s">
+        課程介紹
+      </h3>
+      <section class="row">
+        <div class="offset-lg-1 col-lg-6">
+          <div class="card card-p-0 card-smp">
+            <img src={ featuredCourse.frontmatter.image.url } alt="" class="img-setting">
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <h3 class="text-primary">
+            本月限定課程：{ featuredCourse.frontmatter.cnTitle }
+          </h3>
+          <div class="d-flex align-items-center mb-4">
+            <p class="me-2">授課老師：{ featuredCourse.frontmatter.teacher.map( ( person ) => ( person )  ) }</p>
+            <p class="text-pill bg-primary text-light">
+              { featuredCourse.frontmatter.courseDuration } min
+            </p>
+          </div>
+          <div class="course-content mb-4">
+            { featuredCourse.rawContent() }
+          </div>
+          <a href="/reservation" class="btn btn-m btn-secondary d-inline-block btn-sm-rounded">
+            立即預約
+          </a>
+        </div>
+      </section>
+    </section>
+    <!-- search section -->
+    <section class="bg-primary py-5">
+      <div class="container">
+        <div class="input-group w-25">
+          <input type="text" class="form-control border-secondary py-2 px-4" placeholder="請輸入要搜尋的課程" aria-label="Recipient's username" aria-describedby="basic-addon2">
+          <button type="submit" class="input-group-text bg-secondary py-2 px-4 text-light border-secondary" id="basic-addon2">搜尋</button>
+        </div>
+      </div>
+    </section>
+    <!-- course list -->
+    <section class="layout-py-mp">
+      <section class="container">
+        <div class="row">
+          <div class="col-lg-9 course-list d-flex flex-column gap-x3">
+            
+          </div>
+          <div class="col-lg-3">
+            <h4 class="text-primary">DOYOGA 上課須知：</h4>
+            <ul class="list-unstyled text-primary">
+              <li class="mb-1">請攜帶適當的瑜珈墊和一條長毛巾配合課程使用。</li>
+              <li class="mb-1">運動中請穿著有彈性、吸汗、透氣為原則的衣物，盡量穿著較貼身的運動衣，以便教練指導與自我矯正。</li>
+              <li class="mb-1">
+                運動中切記補充適當的水分、保持腹式呼吸，以鼻吸氣，以口呼氣為原則。
+              </li>
+              <li class="mb-1">運動中請保持微收小腹的原則，肩膀放鬆、頭頂向上延伸，請跟隨教練指示，配合呼吸一步步的確實練習。</li>
+              <li class="">
+                運動過程中若感到任何不適，請馬上停止且與老師商量討論。 若懷孕或特殊疾病請先告知。
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+  <script define:vars={{ filerCousreList,allCourses }}>
+    console.log(allCourses);
+    const courseList = document.querySelector('.course-list')
+    let courseListStr = ''
+    let orderedArr = []
+    let arr =  []
+    filerCousreList.forEach( ( order, key ) => {
+      if ( key % 2 === 0 || key === 0 ) {
+        let newArr = [ order, filerCousreList[key + 1] ]
+        orderedArr.push(newArr)
+      }
+    } )
+    console.log(orderedArr);
+    orderedArr.forEach( ( courseArr, key ) => {
+      courseListStr += `
+      <div class="d-flex justify-content-between">
+        <div class="pointer w-54 card card-smm text-light overflow-visible ${ key % 2 === 1 ? 'order-1' : 'order-0' }">
+          <div class="card-body-col-end">
+            <h3>${ courseArr[0].frontmatter.cnTitle } ${ courseArr[0].frontmatter.title }</h3>
+            <p>授課老師：${ courseArr[0].frontmatter.teacher.map( ( teacher ) =>  { return teacher }  ) }</p>
+          </div>
+          <img src="${courseArr[0].frontmatter.image.url}" alt="" class="card-bg card-bg-top" />
+          <p class="text-pill card-pill">${courseArr[0].frontmatter.courseDuration} min</p>
+        </div>
+        <div class="pointer w-42 card card-smm text-light overflow-visible ${key % 2 === 1 ? 'order-0' : 'order-1' }">
+          <div class="card-body-col-end">
+            <h3>${ courseArr[1].frontmatter.cnTitle } ${ courseArr[1].frontmatter.title }</h3>
+            <p>授課老師：${ courseArr[1].frontmatter.teacher.map( ( teacher ) =>  { return teacher }  ) }</p>
+          </div>
+          <img src="${courseArr[1].frontmatter.image.url}" alt="" class="card-bg" />
+          <p class="text-pill card-pill">${courseArr[1].frontmatter.courseDuration} min</p>
+        </div>
+      </div>
+      `
+    } )
+    courseList.innerHTML = courseListStr
+    
+  </script>
+</Layout>

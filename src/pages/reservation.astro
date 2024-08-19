@@ -1,0 +1,68 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CourseSelectCard from '../components/CourseSelectCard.astro';
+
+const courseList = await Astro.glob('../content/plans/*.md')
+const sortedCourseList = courseList.sort( ( a, b ) => {
+  return a.frontmatter.order - b.frontmatter.order
+} )
+
+const noticeList = [
+  '如果有特殊體質、特殊狀況，請主動告知。',
+  '取消預約或時間異動請於預約日前一天晚間 21:00 前告知，預約當日請勿異動或取消，以免影響您日後再預約的個人信用及難度。',
+  '為維護上課品質，請遵守 DOYOGA 各項參觀規定，未遵守規定者，本公司保留謝絕入館之權利。',
+  'DOYOGA 保留修改預約須知之權利，修改後的條款將公佈於本網站上，不另外個別通知。如果您繼續在本網站進行參觀預約，就表示您已經了解、並同意遵守修改後的約定條款。',
+]
+---
+<Layout title={ 'reservation' } >
+  <section class="layout-pt-l layout-pb-xl container">
+    <h3 class="text-primary text-center mb-4">
+      立即預約
+    </h3>
+    <ul class="row list-unstyled tab layout-mb-s">
+      <div class="offset-lg-3 col-lg-2">
+        <div class="tab-item active">
+          選擇方案
+        </div>
+      </div>
+      <div class="col-lg-2">
+        <div class="tab-item">
+          填寫資料
+        </div>
+      </div>
+      <div class="col-lg-2">
+        <div class="tab-item">
+          完成預約
+        </div>
+      </div>
+    </ul>
+    <div class="row layout-mb-s">
+      { sortedCourseList.map( ( course, key ) => (
+        <div class="col-lg-4">
+          <CourseSelectCard
+            imgUrl={ course.frontmatter.image.url }
+            title = { course.frontmatter.title }
+            cost = { course.frontmatter.cost }
+            description = { course.frontmatter.description }
+            link = { `/reservation-form?course=${ course.frontmatter.title }` }
+          />
+          
+        </div>
+      ) ) }
+    </div>
+    <h3 class="text-primary text-center mb-4">
+      預約須知
+    </h3>
+    <div class="row">
+      <div class="offset-lg-3 col-lg-6">
+        <ol class="px-12 list-inside">
+          { noticeList.map( ( notice ) => (
+            <li>
+              { notice }
+            </li>
+          ) ) }
+        </ol>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,8 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ArrowLink from '../components/ArrowLink.astro';
+import CourseSelectCard from '../components/CourseSelectCard.astro';
 
-const teachersList = await Astro.glob('../teachers/*.md')
+const teachersList = await Astro.glob('../content/teachers/*.md')
 const sortedTeacherList = teachersList.sort( ( a, b ) => {
+  return a.frontmatter.order - b.frontmatter.order
+} )
+
+const courseList = await Astro.glob('../content/plans/*.md')
+const sortedCourseList = courseList.sort( ( a, b ) => {
   return a.frontmatter.order - b.frontmatter.order
 } )
 
@@ -66,7 +73,7 @@ const sortedTeacherList = teachersList.sort( ( a, b ) => {
     <section class="layout-py-l bg-bg position-relative">
       <div class="container position-relative z-index-1">
         <div class="row">
-          <div class="offset-lg-5 col-lg-7 card-l pt-x3">
+          <div class="offset-lg-5 col-lg-7 card-xl pt-x3">
             <div class="d-flex flex-column align-items-end">
               <h3 class="text-primary mb-1 w-85">頂尖師資、專業教學</h3>
               <h4 class="text-secondary mb-6 w-85">強力師資，經歷豐富，協會認證。運用引導式教學，針對不同需求的人制定專屬課程。</h4>
@@ -94,8 +101,8 @@ const sortedTeacherList = teachersList.sort( ( a, b ) => {
         <div class="container">
           <div class="row">
             <div class="col-lg-6">
-              <div class="card-l overflow-hidden rounded-16px">
-                <img src="/card/card8.jpeg" alt="" class="w-100 h-100 object-cover">
+              <div class="card-xl overflow-hidden rounded-16px">
+                <img src="/card/card8.jpeg" alt="" class="img-setting">
               </div>
             </div>
           </div>
@@ -106,15 +113,86 @@ const sortedTeacherList = teachersList.sort( ( a, b ) => {
     <section class="layout-py-l">
       <div class="container">
         <div class="row">
-          <div class="col-lg-4"></div>
-          <div class="col-lg-2"></div>
-          <div class="col-lg-5"></div>
+          <div class="col-lg-4">
+            <div class="card card-p-0 card-l">
+              <img src="/public/card/card10.jpg" alt="" class="img-setting">
+            </div>
+          </div>
+          <div class="col-lg-2">
+            <div class="d-flex flex-column justify-content-between h-100">
+              <div class="card card-sm card-p-0">
+                <img src="/public/card/card10.jpg" alt="" class="img-setting">
+              </div>
+              <div class="card card-sm card-p-0">
+                <img src="/public/card/card9.jpg" alt="" class="img-setting">
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5 align-self-center">
+            <h3 class="text-primary mb-1">舒適空間、靜心放鬆</h3>
+            <h4 class="text-secondary mb-6">我們都渴望平靜安穩的生活，擁有一處能夠靜心的角落，安撫每天繁雜忙碌的心。</h4>
+            <ArrowLink title={ '環境介紹' } link={ '/env' } />
+          </div>
         </div>
+      </div>
+    </section>
+    <!-- course info -->
+    <div class="layout-py-l bg-bg overflow-hidden">
+      <div class="container">
+        <div class="row">
+          <div class="offset-lg-1 col-lg-5 align-self-center">
+            <h3 class="text-primary mb-1">精心設計、課程多元</h3>
+            <h4 class="text-secondary mb-6">教師帶領多元課程，釋放壓力，與身心常見的緊繃不適溫柔和解。</h4>
+            <ArrowLink title={ '課程介紹' } link={ '/course-info' } />
+          </div>
+          <div class="col-lg-6 position-relative">
+            <div class="course-swiper swiper">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <img src="/public/swiper/swiper-1.jpg" alt="" class="img-setting">
+                </div>
+                <div class="swiper-slide">
+                  <img src="/public/swiper/swiper-2.jpg" alt="" class="img-setting">
+                </div>
+                <div class="swiper-slide">
+                  <img src="/public/swiper/swiper-3.jpg" alt="" class="img-setting">
+                </div>
+                <div class="swiper-slide">
+                  <img src="/public/swiper/swiper-4.jpg" alt="" class="img-setting">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- course select -->
+    <section class="layout-pt-m layout-pb-l container">
+      <h3 class="text-primary text-center mb-2">方案選擇</h3>
+      <h4 class="tex-secondary text-center layout-mb-s">DOYOGA 可以帶給你...</h4>
+      <div class="row">
+        { sortedCourseList.map( ( course, key ) => (
+          <div class="col-lg-4">
+            <CourseSelectCard
+              imgUrl={ course.frontmatter.image.url }
+              title = { course.frontmatter.title }
+              cost = { course.frontmatter.cost }
+              description = { course.frontmatter.description }
+              link = { `/reservation-form?course=${ course.frontmatter.title }` }
+            />
+            
+          </div>
+        ) ) }
       </div>
     </section>
 	</main>
 
-  <script define:vars={{ teachersList }}>
-    console.log("Client-side log:", teachersList);
+  <script>
+    import Swiper from 'swiper'
+    const courseSwiper = new Swiper( '.course-swiper' , {
+      slidesPerView: 'auto',
+      spaceBetween: 30,
+      loop: true,
+    })
   </script>
 </Layout>

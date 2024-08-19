@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CourseSelectCard from '../components/CourseSelectCard.astro';
+
+const courseList = await Astro.glob('../content/plans/*.md')
+const sortedCourseList = courseList.sort( ( a, b ) => {
+  return a.frontmatter.order - b.frontmatter.order
+} )
+---
+<Layout title={ 'reservation' } >
+  <section class="layout-pt-l layout-pb-xl container">
+    <h3 class="text-primary text-center mb-4">
+      立即預約
+    </h3>
+    <ul class="row list-unstyled tab layout-mb-s">
+      <div class="offset-lg-3 col-lg-2">
+        <div class="tab-item">
+          選擇方案
+        </div>
+      </div>
+      <div class="col-lg-2">
+        <div class="tab-item active">
+          填寫資料
+        </div>
+      </div>
+      <div class="col-lg-2">
+        <div class="tab-item">
+          完成預約
+        </div>
+      </div>
+    </ul>
+    <p class="text-center"><span class="me-4">您選擇的是</span><span class="h4 text-secondary course-name"></span></p>
+  </section>
+  <script>
+    const queryParams = new URLSearchParams(window.location.search);
+    const course = queryParams.get('course');
+    const courseName = document.querySelector( '.course-name' )
+
+    courseName.textContent = course
+    
+  </script>
+</Layout>

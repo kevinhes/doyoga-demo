@@ -1,7 +1,9 @@
 $layout-spacer: (
   s: (space: 32px),
   m: (space: 40px),
+  mp: ( space: 54px ),
   l: (space: 64px),
+  xl: ( space:104px ),
 );
 
 @each $breakpoint, $values in $layout-spacer {
@@ -18,4 +20,13 @@ $layout-spacer: (
   .layout-mb-#{$breakpoint} {
     margin-bottom: map-get($values, space);
   }
+}
+
+.text-pill {
+  padding: 4px 16px;
+  border-radius: 16px;
+}
+
+.course-content {
+  white-space: pre-line;
 }

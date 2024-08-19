@@ -1,0 +1,12 @@
+.course-swiper-wrapper, .course-swiper {
+  height: 445px;
+}
+
+.course-swiper {
+  width: 150%;
+  .swiper-slide {
+    width: 445px;
+    overflow: hidden;
+    border-radius: 16px;
+  }
+}
